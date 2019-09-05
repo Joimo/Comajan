@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+//import { TextInputMask } from 'react-native-masked-text';
 
 import logo from '../assets/logo.png';
 
 export default function Login() {
     return (
-        <View style={styles.container}> 
+        <KeyboardAvoidingView
+            behavior="padding"
+            enabled={Platform.OS === 'ios'}
+            style={styles.container}
+        > 
             <Image source={logo} style={styles.logo}/> 
             
             <TextInput  
@@ -13,8 +18,8 @@ export default function Login() {
             placeholder="Digite seu CNPJ"
             keyboardType='decimal-pad'            
             placeholderTextColor="#999"
-            />
-
+            />            
+       
             <TextInput  
             style={styles.input} 
             placeholder="Digite sua senha"
@@ -27,7 +32,7 @@ export default function Login() {
                 <Text style={styles.buttonText}>Entrar</Text>    
             </TouchableOpacity>
 
-        </View>        
+        </KeyboardAvoidingView>        
     )
     
 }
@@ -64,6 +69,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-
+        color: '#fff',
+        fontWeight:'bold',
+        fontSize: 16,
     },
 });
