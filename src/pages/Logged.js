@@ -7,18 +7,26 @@ import * as firebase from 'firebase';
 
 export default class Logged extends React.Component {
     state = {
-        email: "",
+        email: '',    
     };
 
     componentDidMount() {
-        const {email} = firebase.auth().currentUser;
-
-        this.setState(email);
+        const email = firebase.auth().currentUser;
+        
+        this.setState(email);        
     }
+
+    signOutUser = () => {
+        firebase.auth().signOut();   
+    };
     render () {
         return(
             <View style={styles.container}>
-                <Text> Olá {this.state.email} </Text>                            
+                <Text> Email: {this.state.email} </Text>                  
+
+                <TouchableOpacity style={styles.button} onPress={this.signOutUser}>
+                   <Text style={styles.buttonText}>Sair</Text> 
+                </TouchableOpacity>                        
             </View>
         )
     }    
