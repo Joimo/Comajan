@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 
 import logo from '../assets/logo.png';
 
@@ -9,17 +9,17 @@ export default class Home extends React.Component {
    // function handleLogin(){
    //     navigation.navigate('Login');
    // }  
+  
     render () {
-        return(
+        return(            
+            
             <View style={styles.container}>
-                
+            <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#f5f5f5" translucent = {false} />    
                 <Image source={logo} style={styles.logo}/> 
 
                 <TouchableOpacity onPress={()  => this.props.navigation.navigate("Login")} style={styles.button}> 
                     <Text style={styles.buttonText}>Acessar</Text>    
-                </TouchableOpacity>
-                
-
+                </TouchableOpacity>            
             </View>
         )
     }    
