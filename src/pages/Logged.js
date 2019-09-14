@@ -1,28 +1,32 @@
 import React from 'react';
 import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 
+
+
 import logo from '../assets/logo.png';
 
 import * as firebase from 'firebase';
 
 export default class Logged extends React.Component {
     state = {
-        email: '',    
+        email: '',
+        isMouted: false,        
     };
 
     componentDidMount() {
-        const email = firebase.auth().currentUser;
-        
-        this.setState(email);        
+        //this.setState({isMounted: true})
+        const email = firebase.auth().currentUser;        
+        this.setState(email);                                       
     }
-
+    
     signOutUser = () => {
         firebase.auth().signOut();   
     };
     render () {
         return(
             <View style={styles.container}>
-                <Text> Email: {this.state.email} </Text>                  
+                <Text> Email: {this.state.email} </Text>    
+                <Text> Name: {this.state.name} </Text>                  
 
                 <TouchableOpacity style={styles.button} onPress={this.signOutUser}>
                    <Text style={styles.buttonText}>Sair</Text> 

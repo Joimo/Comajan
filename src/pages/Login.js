@@ -4,6 +4,7 @@ import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, Tou
 import * as firebase from 'firebase';
 //import firebase from 'react-native-firebase';
 
+
 import logo from '../assets/logo.png';
 
 
@@ -13,25 +14,22 @@ export default class Login extends React.Component {
       email: '',
       password: '',
       errorMessage: null,
+      isAuthenticated: false,
       
   }   
-  
-  handleLogin = () => {
-      const { email, password} = this.state;
-                  
-      try {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password);
-        
-        this.props.navigation.navigate('Logged',email);
 
-                
-        console.log("Ae porra");
-      } catch(err) {
-        console.log(err);
-      }
-      
+  
+  
+  handleLogin = async () => {
+    const { email, password} = this.state;
+    
+    
+        const user = firebase.auth().signInWithEmailAndPassword(email, password).catch(error => this.setState({errorMessage: "Email ou Senha inválidos, tente novamente."}));
+        //this.setState({ isAuthenticated: true });
+
+        //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;
+    
+    
   }
     render () {
         return (      
@@ -39,7 +37,10 @@ export default class Login extends React.Component {
                 behavior="padding"
                 enabled={Platform.OS === 'ios'}
                 style={styles.container}
-            > 
+            >    
+
+                       
+
                 <Image source={logo} style={styles.logo}/> 
                 
                 <TextInput  
@@ -64,6 +65,9 @@ export default class Login extends React.Component {
                 <TouchableOpacity style={styles.button} onPress={this.handleLogin}> 
                     <Text style={styles.buttonText}>Entrar</Text>    
                 </TouchableOpacity>
+
+                <Text style={styles.registerText}> Não possui uma conta?</Text>
+                <Text style={styles.registerTextClick} onPress={()  => this.props.navigation.navigate("Register")}> Clique Aqui!</Text>
                 
                 <KeyboardAvoidingView style={styles.errorMessage}>            
                     {this.state.errorMessage && <Text style={styles.error}>{this.state.errorMessage}</Text>}
@@ -121,5 +125,15 @@ const styles = StyleSheet.create({
         color: '#e9446a',
         fontSize: 13,
         textAlign: 'center',
+    },
+    registerText: {
+        marginTop: 20,
+        color: '#333333',
+        fontSize: 15,
+    },
+    registerTextClick: {
+        color: '#95C213',
+        fontSize: 15,
     }
+
 });

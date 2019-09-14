@@ -4,10 +4,14 @@ import * as firebase from 'firebase';
 
 import logo from '../assets/logo.png';
 
+import {AsyncStorage} from 'react-native';
+
 export default class Loading extends React.Component {
      
     componentDidMount() {
-        console.log("Hello 1");
+        
+        
+        console.log("Hello 1");        
         firebase.auth().onAuthStateChanged(user => {
             console.log("Hello 2");
             this.props.navigation.navigate(user ? "Logged" : "Home");
@@ -16,6 +20,7 @@ export default class Loading extends React.Component {
         });
        //this.props.navigation.navigate("Home");
     }
+    
     render() {
         return(               
             <View style={styles.container}>  

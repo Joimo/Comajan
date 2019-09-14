@@ -26,26 +26,54 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const AppStack = createSwitchNavigator({
-    Home: Home,
-    
+    Home: Home,      
 })
 
 const LoggedApp = createSwitchNavigator({
-    Loged: Logged
+    Loged: Logged,
 })
 
-const AuthStack = createStackNavigator({
-    Login: Login,    
-    Register: Register
+const Auth = createStackNavigator({
+    Home: {
+        screen: Home,
+        navigationOptions: {
+            header: null,
+        },
+    },
+    Login: {
+        screen:  Login,
+        navigationOptions: {
+            headerStyle: {
+                elevation: 0, 
+                shadowOpacity: 0, //para ios  
+                backgroundColor: '#f5f5f5',             
+                
+            },
+        },        
+    },                             
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            headerStyle: {
+                elevation: 0, 
+                shadowOpacity: 0, //para ios  
+                backgroundColor: '#f5f5f5',             
+                
+            },
+        },      
+    },
+    
+    
 })
 
 export default createAppContainer(
     createSwitchNavigator(
     {
-        Loading: Loading,
-        Logged: LoggedApp,
-        Home: AppStack,        
-        Auth: AuthStack,
+        
+        Loading: Loading,        
+        Logged: LoggedApp,                
+        Auth: Auth,
+        
     },{
         initialRouteName: "Loading"
     }

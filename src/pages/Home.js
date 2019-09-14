@@ -8,7 +8,7 @@ import logo from '../assets/logo.png';
 export default class Home extends React.Component {
    // function handleLogin(){
    //     navigation.navigate('Login');
-   // }
+   // }  
     render () {
         return(
             <View style={styles.container}>
@@ -18,10 +18,7 @@ export default class Home extends React.Component {
                 <TouchableOpacity onPress={()  => this.props.navigation.navigate("Login")} style={styles.button}> 
                     <Text style={styles.buttonText}>Acessar</Text>    
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button}> 
-                    <Text style={styles.buttonText}>Cadastrar</Text>    
-                </TouchableOpacity>
+                
 
             </View>
         )

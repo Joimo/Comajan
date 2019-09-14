@@ -2,9 +2,32 @@ import React from 'react';
 import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 //import { TextInputMask } from 'react-native-masked-text';
 
+import * as firebase from 'firebase';
+
 import logo from '../assets/logo.png';
 
 export default class Login extends React.Component {
+    state = {
+        email: '',
+        name: '',
+        place: '',
+        password: '',
+    
+    };
+
+    handleSignUp = () => {
+        console.log(name);
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(userCredentials => {
+                return userCredentials.user.updateProfile({
+                    email: this.state.email,
+                    name: this.state.name
+                });
+            })
+            //.catch(error => this.setState({errorMessage: error.message}))
+    }
     render() {
         return (
             <KeyboardAvoidingView
@@ -20,18 +43,24 @@ export default class Login extends React.Component {
                 placeholder="Digite seu Email"
                 //keyboardType='decimal-pad'            
                 placeholderTextColor="#999"
+                value={this.state.email}
+                onChangeText={email => this.setState({ email })}   
                 />            
 
                 <TextInput  
                 style={styles.input} 
                 placeholder="Digite seu Nome"            
                 placeholderTextColor="#999"
+                value={this.state.name}
+                onChangeText={name => this.setState({ name })}   
                 />
 
                 <TextInput  
                 style={styles.input} 
                 placeholder="Digite seu Endereço"            
                 placeholderTextColor="#999"
+                value={this.state.place}
+                onChangeText={place => this.setState({ place })}   
                 />
 
                 <TextInput  
@@ -39,10 +68,12 @@ export default class Login extends React.Component {
                 placeholder="Digite sua senha"
                 keyboardType='decimal-pad' 
                 placeholderTextColor="#999"
-                secureTextEntry={true}   
+                secureTextEntry={true}
+                value={this.state.password}
+                onChangeText={password => this.setState({ password })}      
                 />
 
-                <TouchableOpacity style={styles.button}> 
+                <TouchableOpacity style={styles.button} onPress={this.handleSignUp}> 
                     <Text style={styles.buttonText}>Enviar</Text>    
                 </TouchableOpacity>
 
