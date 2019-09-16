@@ -20,10 +20,12 @@ var firebaseConfig = {
     messagingSenderId: "1090336328516",
     appId: "1:1090336328516:web:a2adee311bdbd60461e511"
   };
-
+  
 
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+
 
 const AppStack = createSwitchNavigator({
     Home: Home,      

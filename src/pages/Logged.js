@@ -10,13 +10,18 @@ import * as firebase from 'firebase';
 export default class Logged extends React.Component {
     state = {
         email: '',
+        name: '',
         isMouted: false,        
     };
 
     componentDidMount() {
         //this.setState({isMounted: true})
-        const email = firebase.auth().currentUser;        
-        this.setState(email);                                       
+        const email = firebase.auth().currentUser;
+        const name = firebase.auth().currentUser;             
+        this.setState(email); 
+        this.setState(name);         
+        
+        
     }
     
     signOutUser = () => {

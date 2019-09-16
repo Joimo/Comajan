@@ -15,8 +15,7 @@ export default class Login extends React.Component {
     
     };
 
-    handleSignUp = () => {
-        console.log(name);
+    handleSignUp = () => {        
         firebase
             .auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -26,7 +25,17 @@ export default class Login extends React.Component {
                     name: this.state.name
                 });
             })
-            //.catch(error => this.setState({errorMessage: error.message}))
+            //.catch(error => this.setState({errorMessage: error.message}))            
+            var database = firebase.database();            
+            var ref = database.ref('test');
+
+            var data = {                
+                name: this.state.name,
+                email: this.state.email                
+
+            }
+            var result = ref.push(data);
+            console.log(result.key);
     }
     render() {
         return (

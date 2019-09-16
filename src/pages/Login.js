@@ -1,11 +1,11 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 //import { TextInputMask } from 'react-native-masked-text';
 import * as firebase from 'firebase';
 //import firebase from 'react-native-firebase';
 
-
 import logo from '../assets/logo.png';
+
 
 
 
@@ -17,8 +17,7 @@ export default class Login extends React.Component {
       isAuthenticated: false,
       
   }   
-
-  
+ 
   
   handleLogin = async () => {
     const { email, password} = this.state;
@@ -26,10 +25,11 @@ export default class Login extends React.Component {
     
         const user = firebase.auth().signInWithEmailAndPassword(email, password).catch(error => this.setState({errorMessage: "Email ou Senha inválidos, tente novamente."}));
         //this.setState({ isAuthenticated: true });
+        //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;        
+        console.log(user);
 
-        //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;
-    
-    
+        //await AsyncStorage.setItem('user', JSON.stringify(user));   
+        
   }
     render () {
         return (      
