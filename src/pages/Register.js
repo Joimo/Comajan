@@ -4,6 +4,8 @@ import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, Tou
 
 import * as firebase from 'firebase';
 
+import {db} from '../routes';
+
 import logo from '../assets/logo.png';
 
 export default class Login extends React.Component {
@@ -11,32 +13,36 @@ export default class Login extends React.Component {
         email: '',
         name: '',
         place: '',
-        password: '',
-    
+        password: '',            
     };
 
     handleSignUp = () => {        
         firebase
             .auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            
             .then(userCredentials => {
                 return userCredentials.user.updateProfile({
                     email: this.state.email,
-                    name: this.state.name
+                    //name: this.state.name
                 });
             })
-            //.catch(error => this.setState({errorMessage: error.message}))            
-            var database = firebase.database();            
-            var ref = database.ref('test');
 
-            var data = {                
-                name: this.state.name,
-                email: this.state.email                
-
-            }
-            var result = ref.push(data);
-            console.log(result.key);
+            // SAVE USER DATA IN FIRESTORES
+            db.collection("users").doc(this.state.email).set({
+                name: this.state.name,                
+                place: this.state.place
+             })
+             .then(function() {
+                 console.log("Document successfully written!");
+             })
+             .catch(function(error) {
+                 console.error("Error writing document: ", error);
+             });
+            //.catch(error => this.setState({errorMessage: error.message}))                   
     }
+
+
     render() {
         return (
             <KeyboardAvoidingView

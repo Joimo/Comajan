@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Platform, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { View, Platform, Text, StyleSheet, Image, ActivityIndicator, StatusBar } from 'react-native';
 import * as firebase from 'firebase';
+
+import {db} from '../routes';
 
 import logo from '../assets/logo.png';
 
@@ -17,12 +19,21 @@ export default class Loading extends React.Component {
             
         });
        //this.props.navigation.navigate("Home");
+      
+
+       
     }
    
     
     render() {
         return(               
-            <View style={styles.container}>  
+            <View style={styles.container}>
+                <StatusBar
+                barStyle="dark-content"
+                hidden={false}
+                backgroundColor="#f5f5f5"
+                translucent={false}
+                />  
                 <Image source={logo} style={styles.logo}/> 
                 <ActivityIndicator size="large" color="#95C213"/>
             </View>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1090336328516",
+    "firebase_url": "https://comajan-a17a4.firebaseio.com",
+    "project_id": "comajan-a17a4",
+    "storage_bucket": "comajan-a17a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090336328516:android:aef62b4bfc68ac5a61e511",
+        "android_client_info": {
+          "package_name": "com.comajan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090336328516-572unh5o6gne2ol3br1b85o0cve9dir5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ0dvtzUosy8sOSKkpzWfkqMrMqBQTzmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090336328516-572unh5o6gne2ol3br1b85o0cve9dir5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

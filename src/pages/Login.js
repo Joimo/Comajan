@@ -9,8 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 //import { TextInputMask } from 'react-native-masked-text';
+
 import * as firebase from 'firebase';
-//import firebase from 'react-native-firebase';
+
+import auth from '@react-native-firebase/auth';
+//import firebase from '@react-native-firebase';
 import logo from '../assets/logo.png';
 
 export default class Login extends React.Component {
@@ -32,7 +35,7 @@ export default class Login extends React.Component {
           errorMessage: 'Email ou Senha inválidos, tente novamente.',
         }),
       );
-    //this.setState({ isAuthenticated: true });
+  
 
     //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;
   };

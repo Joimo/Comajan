@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 
 
 
@@ -19,8 +19,7 @@ export default class Logged extends React.Component {
         const email = firebase.auth().currentUser;
         const name = firebase.auth().currentUser;             
         this.setState(email); 
-        this.setState(name);         
-        
+        this.setState(name);                
         
     }
     
@@ -30,6 +29,12 @@ export default class Logged extends React.Component {
     render () {
         return(
             <View style={styles.container}>
+                <StatusBar
+                barStyle="dark-content"
+                hidden={false}
+                backgroundColor="#f5f5f5"
+                translucent={false}
+                />
                 <Text> Email: {this.state.email} </Text>    
                 <Text> Name: {this.state.name} </Text>                  
 

@@ -16,7 +16,7 @@ export default class Home extends React.Component {
   // function handleLogin(){
   //     navigation.navigate('Login');
   // }
-
+  
   render() {
     return (
       <View style={styles.container}>
