@@ -13,7 +13,7 @@ import {
 
 import * as firebase from 'firebase';
 
-import auth from '@react-native-firebase/auth';
+//import auth from '@react-native-firebase/auth';
 //import firebase from '@react-native-firebase';
 import logo from '../assets/logo.png';
 
@@ -31,29 +31,23 @@ export default class Login extends React.Component {
     const user = firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-        .catch(error => {
-          if (error.code == 'auth/wrong-password') {
-            this.setState({
-              errorMessage: 'Senha Inválida.',
-            });
-          }           
-          if (error.code == 'auth/invalid-email') {
-            this.setState({
-              errorMessage: 'Email Inválido.',
-            });
-          }
-          if(this.state.email == '' || this.state.password == '') {
-            this.setState({
-              errorMessage: 'Campos obrigatórios.',
-            });
-          }             
+      .catch(error => {
+        if (error.code == 'auth/wrong-password') {
+          this.setState({
+            errorMessage: 'Senha Inválida.',
+          });
+        }
+        if (error.code == 'auth/invalid-email') {
+          this.setState({
+            errorMessage: 'Email Inválido.',
+          });
+        }
+        if (this.state.email == '' || this.state.password == '') {
+          this.setState({
+            errorMessage: 'Campos obrigatórios.',
+          });
+        }
       });
-          
-        
-          
-          
-
-  
 
     //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;
   };
@@ -88,31 +82,31 @@ export default class Login extends React.Component {
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.registerText}> Esqueceu suas credenciais?</Text>
-        <Text
-          style={styles.registerTextClick}
-          onPress={() => this.props.navigation.navigate('Register')}>
-          {' '}
-          Clique Aqui!
-        </Text>
+        <View style={styles.textLinhas}>
+          <Text style={styles.registerText}> Esqueceu suas credenciais?</Text>
+          <Text
+            style={styles.registerTextClick}
+            onPress={() => this.props.navigation.navigate('Register')}>
+            {' '}
+            Clique Aqui!
+          </Text>
+        </View>
 
-        <View
-          style={{
-            borderBottomColor: '#91f23',
-            borderBottomWidth: 0.3,
-            width: '100%',
-            marginTop: 15,
+        <View style={styles.linhas}>
+          <View style={styles.linha} />
+          <Text>OU</Text>
+          <View style={styles.linha} />
+        </View>
 
-          }}
-        />
-
-        <Text style={styles.registerText}> Não possui uma conta?</Text>
-        <Text
-          style={styles.registerTextClick}
-          onPress={() => this.props.navigation.navigate('Register')}>
-          {' '}
-          Clique Aqui!
-        </Text>
+        <View style={styles.textLinhas}>
+          <Text style={styles.registerText}> Não possui uma conta?</Text>
+          <Text
+            style={styles.registerTextClick}
+            onPress={() => this.props.navigation.navigate('Register')}>
+            {' '}
+            Clique Aqui!
+          </Text>
+        </View>
 
         <KeyboardAvoidingView style={styles.errorMessage}>
           {this.state.errorMessage && (
@@ -154,6 +148,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   buttonText: {
     color: '#fff',
@@ -170,13 +165,31 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: 'center',
   },
+  textLinhas: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linhas: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  linha: {
+    borderBottomColor: '#911f23',
+    borderBottomWidth: 0.3,
+    width: '35%',
+    margin: 10,
+  },
   registerText: {
-    marginTop: 20,
+    marginTop: 10,
     color: '#333333',
-    fontSize: 15,
+    fontSize: 10,
   },
   registerTextClick: {
+    marginTop: 10,
     color: '#95C213',
-    fontSize: 15,
+    fontSize: 10,
   },
 });
