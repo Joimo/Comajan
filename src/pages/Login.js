@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   KeyboardAvoidingView,
+  View,
   Platform,
   Text,
   StyleSheet,
@@ -39,6 +40,11 @@ export default class Login extends React.Component {
           if (error.code == 'auth/invalid-email') {
             this.setState({
               errorMessage: 'Email Inválido.',
+            });
+          }
+          if(this.state.email == '' || this.state.password == '') {
+            this.setState({
+              errorMessage: 'Campos obrigatórios.',
             });
           }             
       });
@@ -81,6 +87,24 @@ export default class Login extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
+
+        <Text style={styles.registerText}> Esqueceu suas credenciais?</Text>
+        <Text
+          style={styles.registerTextClick}
+          onPress={() => this.props.navigation.navigate('Register')}>
+          {' '}
+          Clique Aqui!
+        </Text>
+
+        <View
+          style={{
+            borderBottomColor: '#91f23',
+            borderBottomWidth: 0.3,
+            width: '100%',
+            marginTop: 15,
+
+          }}
+        />
 
         <Text style={styles.registerText}> Não possui uma conta?</Text>
         <Text

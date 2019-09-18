@@ -1,31 +1,35 @@
 import React from 'react';
 import { View, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 
+import * as firebase from 'firebase';
 
+import {db} from '../routes';
 
 import logo from '../assets/logo.png';
 
-import * as firebase from 'firebase';
 
 export default class Logged extends React.Component {
     state = {
         email: '',
-        name: '',
-        isMouted: false,        
+        name: '',                
+        print: '',        
     };
 
     componentDidMount() {
-        //this.setState({isMounted: true})
-        const email = firebase.auth().currentUser;
-        const name = firebase.auth().currentUser;             
-        this.setState(email); 
-        this.setState(name);                
-        
+        const email = firebase.auth().currentUser;                     
+        this.setState(email);                                
+        this.getItems();
     }
+
+    getItems = async () => {
+
+    }
+  
     
     signOutUser = () => {
         firebase.auth().signOut();   
     };
+    
     render () {
         return(
             <View style={styles.container}>
@@ -34,13 +38,17 @@ export default class Logged extends React.Component {
                 hidden={false}
                 backgroundColor="#f5f5f5"
                 translucent={false}
-                />
+                />               
+
                 <Text> Email: {this.state.email} </Text>    
                 <Text> Name: {this.state.name} </Text>                  
+                <Text> print: {this.state.print} </Text>                                 
 
                 <TouchableOpacity style={styles.button} onPress={this.signOutUser}>
                    <Text style={styles.buttonText}>Sair</Text> 
-                </TouchableOpacity>                        
+                </TouchableOpacity>  
+                
+
             </View>
         )
     }    
@@ -71,5 +79,5 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight:'bold',
         fontSize: 16,
-    },
+    },   
 });

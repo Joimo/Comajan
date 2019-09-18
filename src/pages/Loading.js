@@ -10,20 +10,14 @@ import logo from '../assets/logo.png';
 
 export default class Loading extends React.Component {
      
-    componentDidMount() {               
-        console.log("Hello 1");        
-        firebase.auth().onAuthStateChanged(user => {
-            console.log("Hello 2");
-            this.props.navigation.navigate(user ? "Logged" : "Home");
-            console.log("Hello 3 ");
+    componentDidMount() {                             
+        firebase.auth().onAuthStateChanged(user => {            
+            this.props.navigation.navigate(user ? "Logged" : "Home");            
             
         });
-       //this.props.navigation.navigate("Home");
-      
-
+       //this.props.navigation.navigate("Home");     
        
-    }
-   
+    }   
     
     render() {
         return(               

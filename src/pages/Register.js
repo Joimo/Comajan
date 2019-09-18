@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Platform, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 //import { TextInputMask } from 'react-native-masked-text';
 
 import * as firebase from 'firebase';
@@ -13,23 +13,50 @@ export default class Login extends React.Component {
         email: '',
         name: '',
         place: '',
-        password: '',            
+        password: '', 
+        errorMessage: '',
+        isOk: true,
     };
 
-    handleSignUp = () => {        
+    handleSignUp = () => {                
         firebase
             .auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            
-            .then(userCredentials => {
-                return userCredentials.user.updateProfile({
-                    email: this.state.email,
-                    //name: this.state.name
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)            
+                .catch(error => {                    
+                    if(error.code == 'auth/email-already-in-use') {
+                        this.setState({errorMessage: "Este Email já está em uso."});
+                        //Alert.alert(this.state.errorMessage);                        
+                        this.setState({isOk: false});
+                    }                  
+                    if(error.code == 'auth/invalid-email') {
+                        this.setState({errorMessage: "Email Inválido."});
+                        this.setState({isOk: false});
+                    }
+                    if(error.code == 'auth/weak-password') {
+                        this.setState({errorMessage: "Senha Fraca."});
+                        this.setState({isOk: false});
+                    }
                 });
-            })
-
+                if(this.state.isOk == false) {
+                    db.collection("users").doc(this.state.email)
+                    .set({
+                        name: this.state.name,                
+                        place: this.state.place
+                    })
+                    .then(function() {
+                        console.log("Document successfully written!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
+                //.catch(error => this.setState({errorMessage: error.message}))         
+                }
+                
+            };
+                  
             // SAVE USER DATA IN FIRESTORES
-            db.collection("users").doc(this.state.email).set({
+            /*
+            .set({
                 name: this.state.name,                
                 place: this.state.place
              })
@@ -40,16 +67,21 @@ export default class Login extends React.Component {
                  console.error("Error writing document: ", error);
              });
             //.catch(error => this.setState({errorMessage: error.message}))                   
-    }
-
-
+            */
+               
     render() {
         return (
             <KeyboardAvoidingView
                 behavior="padding"
                 enabled={Platform.OS === 'ios'}
                 style={styles.container}
-            > 
+            >                 
+                
+
+                <KeyboardAvoidingView style={styles.errorMessage}>
+                    <Text style={styles.error}>{this.state.errorMessage}</Text>
+                </KeyboardAvoidingView>
+                
                 
                 <Image source={logo} style={styles.logo}/> 
                 
@@ -133,4 +165,14 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize: 16,
     },
+    errorMessage: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 52,
+      },
+      error: {
+        color: '#e9446a',
+        fontSize: 13,
+        textAlign: 'center',
+      },
 });
