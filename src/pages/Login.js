@@ -30,11 +30,23 @@ export default class Login extends React.Component {
     const user = firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch(error =>
-        this.setState({
-          errorMessage: 'Email ou Senha inválidos, tente novamente.',
-        }),
-      );
+        .catch(error => {
+          if (error.code == 'auth/wrong-password') {
+            this.setState({
+              errorMessage: 'Senha Inválida.',
+            });
+          }           
+          if (error.code == 'auth/invalid-email') {
+            this.setState({
+              errorMessage: 'Email Inválido.',
+            });
+          }             
+      });
+          
+        
+          
+          
+
   
 
     //this.state.isAuthenticated ? this.props.navigation.navigate('Logged',email) : null;
