@@ -12,7 +12,7 @@ import {
 //import { TextInputMask } from 'react-native-masked-text';
 
 import * as firebase from 'firebase';
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 import {db} from '../routes';
 
 import logo from '../assets/logo.png';
@@ -25,6 +25,19 @@ export default class Login extends React.Component {
     password: '',
     errorMessage: '',
     isOk: true,
+    showAlert: false,
+  };
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true,
+    });
+  };
+
+  hideAlert = () => {
+    this.setState({
+      showAlert: false,
+    });
   };
 
   handleSignUp = () => {
@@ -35,14 +48,17 @@ export default class Login extends React.Component {
         if (error.code == 'auth/email-already-in-use') {
           this.setState({errorMessage: 'Este Email já está em uso.'});
           //Alert.alert(this.state.errorMessage);
+          this.setState({showAlert: true});
           this.setState({isOk: false});
         }
         if (error.code == 'auth/invalid-email') {
-          this.setState({errorMessage: 'Email Inválido.'});
+          this.setState({errorMessage: 'Email Inválido. Tente novamente'});
+          this.setState({showAlert: true});
           this.setState({isOk: false});
         }
         if (error.code == 'auth/weak-password') {
-          this.setState({errorMessage: 'Senha Fraca.'});
+          this.setState({errorMessage: 'Senha Fraca. Tente novamente'});
+          this.setState({showAlert: true});
           this.setState({isOk: false});
         }
       });
@@ -79,11 +95,15 @@ export default class Login extends React.Component {
             */
 
   render() {
+    const {showAlert} = this.state;
     return (
       <KeyboardAvoidingView
         behavior="padding"
         enabled={Platform.OS === 'ios'}
         style={styles.container}>
+        {/*<TouchableOpacity style={styles.button} onPress={this.showAlert()}>
+          <Text>Clique aqui</Text>
+        </TouchableOpacity>*/}
         <Image source={logo} style={styles.logo} />
 
         <TextInput
@@ -124,6 +144,26 @@ export default class Login extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
           <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
+
+        <AwesomeAlert
+          show={showAlert}
+          showProgress={true}
+          title="Alerta"
+          message={this.state.errorMessage}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="Cancelar"
+          confirmText="Ok"
+          confirmButtonColor="#95C213"
+          onCancelPressed={() => {
+            this.hideAlert();
+          }}
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+        />
       </KeyboardAvoidingView>
     );
   }
