@@ -37,7 +37,7 @@ const firebaseApp = firebase.initializeApp({
 
 const db = firebaseApp.firestore();
 
-export { db };
+export {db};
 
 const AppStack = createSwitchNavigator({
   Home: Home,
