@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 
+import AlertPro from 'react-native-alert-pro'
+
 import {db} from '../routes';
 import logo from '../assets/logo.png';
 
@@ -19,10 +21,18 @@ export default class Loading extends React.Component {
       this.props.navigation.navigate(user ? 'Logged' : 'Home');
     });
     //this.props.navigation.navigate("Home");
+    
+    <AlertPro
+    ref={ref => {
+      this.AlertPro = ref;
+      this.props.AlertPro.close();
+    }}
+    
+    />  
   }
-
+    
   render() {
-    return (
+    return (      
       <View style={styles.container}>
         <StatusBar
           barStyle="dark-content"

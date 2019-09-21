@@ -6,13 +6,14 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  TouchableOpacity,
-  Alert,
+  TouchableOpacity,  
 } from 'react-native';
-//import { TextInputMask } from 'react-native-masked-text';
+
+import AlertPro from 'react-native-alert-pro'
+
 
 import * as firebase from 'firebase';
-import AwesomeAlert from 'react-native-awesome-alerts';
+//import AwesomeAlert from 'react-native-awesome-alerts';
 import {db} from '../routes';
 
 import logo from '../assets/logo.png';
@@ -24,21 +25,10 @@ export default class Login extends React.Component {
     place: '',
     password: '',
     errorMessage: '',
-    isOk: true,
-    showAlert: false,
+    isOk: null,
   };
 
-  showAlert = () => {
-    this.setState({
-      showAlert: true,
-    });
-  };
-
-  hideAlert = () => {
-    this.setState({
-      showAlert: false,
-    });
-  };
+  
 
   handleSignUp = () => {
     firebase
@@ -48,21 +38,30 @@ export default class Login extends React.Component {
         if (error.code == 'auth/email-already-in-use') {
           this.setState({errorMessage: 'Este Email já está em uso.'});
           //Alert.alert(this.state.errorMessage);
-          this.setState({showAlert: true});
-          this.setState({isOk: false});
-        }
+          //this.setState({showAlert: true});
+          this.setState({isOk: false});          
+          this.AlertPro.open(this.state.errorMessage);
+        } 
         if (error.code == 'auth/invalid-email') {
           this.setState({errorMessage: 'Email Inválido. Tente novamente'});
-          this.setState({showAlert: true});
+          //this.setState({showAlert: true});    
           this.setState({isOk: false});
-        }
+          this.AlertPro.open(this.state.errorMessage);
+        } 
         if (error.code == 'auth/weak-password') {
           this.setState({errorMessage: 'Senha Fraca. Tente novamente'});
-          this.setState({showAlert: true});
+          //this.setState({showAlert: true});    
           this.setState({isOk: false});
-        }
+          this.AlertPro.open(this.state.errorMessage);
+        } 
+        if (error.code == 'auth/invalid-display-name') {
+          this.setState({errorMessage: 'Campos Obrigatórios'});
+          //this.setState({showAlert: true});    
+          this.setState({isOk: false});
+          this.AlertPro.open(this.state.errorMessage);
+        } 
       });
-    if (this.state.isOk == false) {
+    if (this.state.isOk) {
       db.collection('users')
         .doc(this.state.email)
         .set({
@@ -95,7 +94,7 @@ export default class Login extends React.Component {
             */
 
   render() {
-    const {showAlert} = this.state;
+    //const {showAlert} = this.state;
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -119,7 +118,7 @@ export default class Login extends React.Component {
           style={styles.input}
           placeholder="Digite seu Nome"
           placeholderTextColor="#999"
-          value={this.state.name}
+          value={this.state.name}          
           onChangeText={name => this.setState({name})}
         />
 
@@ -143,27 +142,40 @@ export default class Login extends React.Component {
 
         <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
           <Text style={styles.buttonText}>Enviar</Text>
-        </TouchableOpacity>
-
-        <AwesomeAlert
-          show={showAlert}
-          showProgress={true}
-          title="Alerta"
-          message={this.state.errorMessage}
-          closeOnTouchOutside={true}
-          closeOnHardwareBackPress={false}
-          showCancelButton={true}
-          showConfirmButton={true}
-          cancelText="Cancelar"
-          confirmText="Ok"
-          confirmButtonColor="#95C213"
-          onCancelPressed={() => {
-            this.hideAlert();
+        </TouchableOpacity>              
+            
+        <AlertPro
+          ref={ref => {
+            this.AlertPro = ref;
           }}
-          onConfirmPressed={() => {
-            this.hideAlert();
+          onConfirm={() => this.AlertPro.close()}
+          title="Algo deu errado.."
+          message={this.state.errorMessage}
+          //textCancel=""
+          textConfirm="Ok"
+          showCancel={false}
+          customStyles={{
+            mask: {
+              backgroundColor: "transparent"
+            },
+            container: {
+              borderWidth: 1,
+              borderColor: "transparent",
+              shadowColor: "#000000",
+              shadowOpacity: 0.1,
+              shadowRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',                            
+            },
+            buttonCancel: {
+              backgroundColor: "white"
+            },
+            buttonConfirm: {
+              backgroundColor: "#fcba03"
+            }
           }}
         />
+
       </KeyboardAvoidingView>
     );
   }
