@@ -6,11 +6,10 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  TouchableOpacity,  
+  TouchableOpacity,
 } from 'react-native';
 
-import AlertPro from 'react-native-alert-pro'
-
+import AlertPro from 'react-native-alert-pro';
 
 import * as firebase from 'firebase';
 //import AwesomeAlert from 'react-native-awesome-alerts';
@@ -28,8 +27,6 @@ export default class Login extends React.Component {
     isOk: null,
   };
 
-  
-
   handleSignUp = () => {
     firebase
       .auth()
@@ -39,27 +36,27 @@ export default class Login extends React.Component {
           this.setState({errorMessage: 'Este Email já está em uso.'});
           //Alert.alert(this.state.errorMessage);
           //this.setState({showAlert: true});
-          this.setState({isOk: false});          
+          this.setState({isOk: false});
           this.AlertPro.open(this.state.errorMessage);
-        } 
+        }
         if (error.code == 'auth/invalid-email') {
           this.setState({errorMessage: 'Email Inválido. Tente novamente'});
-          //this.setState({showAlert: true});    
+          //this.setState({showAlert: true});
           this.setState({isOk: false});
           this.AlertPro.open(this.state.errorMessage);
-        } 
+        }
         if (error.code == 'auth/weak-password') {
           this.setState({errorMessage: 'Senha Fraca. Tente novamente'});
-          //this.setState({showAlert: true});    
+          //this.setState({showAlert: true});
           this.setState({isOk: false});
           this.AlertPro.open(this.state.errorMessage);
-        } 
+        }
         if (error.code == 'auth/invalid-display-name') {
           this.setState({errorMessage: 'Campos Obrigatórios'});
-          //this.setState({showAlert: true});    
+          //this.setState({showAlert: true});
           this.setState({isOk: false});
           this.AlertPro.open(this.state.errorMessage);
-        } 
+        }
       });
     if (this.state.isOk) {
       db.collection('users')
@@ -118,7 +115,7 @@ export default class Login extends React.Component {
           style={styles.input}
           placeholder="Digite seu Nome"
           placeholderTextColor="#999"
-          value={this.state.name}          
+          value={this.state.name}
           onChangeText={name => this.setState({name})}
         />
 
@@ -142,8 +139,8 @@ export default class Login extends React.Component {
 
         <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
           <Text style={styles.buttonText}>Enviar</Text>
-        </TouchableOpacity>              
-            
+        </TouchableOpacity>
+
         <AlertPro
           ref={ref => {
             this.AlertPro = ref;
@@ -156,26 +153,25 @@ export default class Login extends React.Component {
           showCancel={false}
           customStyles={{
             mask: {
-              backgroundColor: "transparent"
+              backgroundColor: 'transparent',
             },
             container: {
               borderWidth: 1,
-              borderColor: "transparent",
-              shadowColor: "#000000",
+              borderColor: 'transparent',
+              shadowColor: '#000000',
               shadowOpacity: 0.1,
               shadowRadius: 10,
               justifyContent: 'center',
-              alignItems: 'center',                            
+              alignItems: 'center',
             },
             buttonCancel: {
-              backgroundColor: "white"
+              backgroundColor: 'white',
             },
             buttonConfirm: {
-              backgroundColor: "#fcba03"
-            }
+              backgroundColor: '#fcba03',
+            },
           }}
         />
-
       </KeyboardAvoidingView>
     );
   }

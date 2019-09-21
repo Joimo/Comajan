@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 
-import AlertPro from 'react-native-alert-pro';;
+import AlertPro from 'react-native-alert-pro';
 
 import {db} from '../routes';
 import logo from '../assets/logo.png';
